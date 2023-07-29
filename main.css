@@ -1,3 +1,25 @@
 body {
   background-color: black;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+#header {
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+header {
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+#form-container {
+  justify-content: center;
+  padding-bottom: 20px;
+}
+#filterBtns {
+  padding-bottom: 20px;
 }
