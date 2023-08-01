@@ -7,7 +7,7 @@ students = [
   {
     id: 2,
     name: "Neville Longbottom",
-    house: "Gryffindor" 
+    house: "Hufflepuff" 
   }, 
   {
     id: 3,
@@ -81,6 +81,33 @@ const expelledOnDom = (array) => {
   } 
   renderToDom("#expelledContainer", expelledString)
 }
+// calling the expelledOnDom function using the expelled students array - need to move this to starting app function once completed
 
-//calling the expelledOnDom function using the expelled students array - need to move this to starting app function once completed
 expelledOnDom(expelledStudents);
+
+// filter students by house
+
+const studentContainer = document.querySelector("#filterBtns")
+
+const studentsByHouse =  (house) => {
+  const filteredStudents = students.filter((student) => student.house === house)
+  studentsOnDom(filteredStudents);
+}
+
+studentContainer.addEventListener('click', (e) => {
+  switch (e.target.id) {
+    case "gryffindor":
+      studentsByHouse("Gryffindor");
+    break;
+    case "hufflepuff":
+      studentsByHouse("Hufflepuff");
+    break;
+    case "ravenclaw":
+      studentsByHouse("Ravenclaw");
+    break;
+    case "slytherin":
+      studentsByHouse("Slytherin");
+    break;
+    default: studentsOnDom(students);
+  }
+})
