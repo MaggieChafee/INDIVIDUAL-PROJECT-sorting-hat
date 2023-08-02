@@ -58,7 +58,7 @@ const studentsOnDom = (array) => {
     <div class="card-body">
       <h5 class="card-title">${student.name}</h5>
       <p class="card-text">${student.house}</p>
-      <button type="button" class="btn btn-danger">EXPEL!</button>
+      <button id="expel--${student.id}" type="button" class="btn btn-danger">EXPEL!</button>
     </div>
   </div>`
   } 
@@ -87,14 +87,14 @@ expelledOnDom(expelledStudents);
 
 // filter students by house
 
-const studentContainer = document.querySelector("#filterBtns")
+const filterContainer = document.querySelector("#filterBtns")
 
 const studentsByHouse =  (house) => {
   const filteredStudents = students.filter((student) => student.house === house)
   studentsOnDom(filteredStudents);
 }
 
-studentContainer.addEventListener('click', (e) => {
+filterContainer.addEventListener('click', (e) => {
   switch (e.target.id) {
     case "gryffindor":
       studentsByHouse("Gryffindor");
@@ -112,7 +112,7 @@ studentContainer.addEventListener('click', (e) => {
   }
 })
 
-// making sorting form functional
+// this block of code makes the code appear after clicking "Begin your journey"
 
 const showFormBtn = document.querySelector("#showFormBtn")
 
@@ -131,6 +131,7 @@ showFormBtn.addEventListener("click", (e) => {
   showForm()
 });
 
+// this portion of code submits the form and renders a card on dom for new student
 const submitForm = document.querySelector("form")
 
 const houseSort = () => {
@@ -158,3 +159,18 @@ const studentSort = (e) => {
 };
 
 submitForm.addEventListener("submit", studentSort);
+
+// Expel Button Functionality 
+
+const studentsContainer = document.querySelector("#studentsContainer")
+
+studentsContainer.addEventListener("click", (e) => {
+  if (e.target.id.includes("expel")) {
+    const [, id] = e.target.id.split("--")
+    const index = students.findIndex(student => student.id === Number(id));
+    students.splice(index,1);
+    expelledStudents.push(students[index]);
+  }
+  studentsOnDom(students);
+  expelledOnDom(expelledStudents);
+})
