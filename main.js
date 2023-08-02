@@ -75,7 +75,7 @@ const expelledOnDom = (array) => {
     expelledString += `<div class="card" style="width: 18rem;">
     <img src="https://media.comicbook.com/2016/08/wizard-world-hp-death-eaters-194218.jpg" class="card-img-top" alt="Harry Potter Death Eaters wandering through Hogsmeade in the Dark">
     <div class="card-body">
-      <p class="card-text">Sadly, <strong>${expelled.name}</strong> joined Voldemort's Army of Death Eaters.</p>
+      <p class="card-text">Sadly, <strong>${expelled.name}</strong> joined Voldy. Boo.</p>
     </div>
   </div>`
   } 
@@ -111,3 +111,50 @@ studentContainer.addEventListener('click', (e) => {
     default: studentsOnDom(students);
   }
 })
+
+// making sorting form functional
+
+const showFormBtn = document.querySelector("#showFormBtn")
+
+const showForm = (e) => {
+  let sortString = ""
+  sortString += `
+  <div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">First and Last Name</label>
+  <textarea class="form-control" id="student-name" rows="1" required></textarea>
+  </div>
+  <button id="formSubmit" type="submit" class="btn btn-primary">Get sorted!</button>`,
+  renderToDom("#form-container", sortString)
+}
+
+showFormBtn.addEventListener("click", (e) => {
+  showForm()
+});
+
+const submitForm = document.querySelector("form")
+
+const houseSort = () => {
+ const houseGen = [
+    "Gryffindor",
+    "Hufflepuff",
+    "Ravenclaw",
+    "Hufflepuff"
+] 
+  return houseGen[Math.floor(Math.random() * 4)]
+};
+
+const studentSort = (e) => {
+  e.preventDefault();
+  
+  const newStudent = {
+    id: students.length +1,
+    name: document.querySelector("#student-name").value,
+    house: houseSort()
+  }
+
+  students.push(newStudent);
+  studentsOnDom(students);
+  submitForm.reset() 
+};
+
+submitForm.addEventListener("submit", studentSort);
