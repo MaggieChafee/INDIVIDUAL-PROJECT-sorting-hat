@@ -112,7 +112,7 @@ studentContainer.addEventListener('click', (e) => {
   }
 })
 
-// making sorting form functional
+// this block of code makes the code appear after clicking "Begin your journey"
 
 const showFormBtn = document.querySelector("#showFormBtn")
 
@@ -131,6 +131,7 @@ showFormBtn.addEventListener("click", (e) => {
   showForm()
 });
 
+// this portion of code submits the form and renders a card on dom for new student
 const submitForm = document.querySelector("form")
 
 const houseSort = () => {
