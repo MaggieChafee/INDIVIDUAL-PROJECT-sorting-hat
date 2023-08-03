@@ -37,6 +37,13 @@ header {
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+#expeledContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
 .card-text {
   font-weight: lighter;
 }

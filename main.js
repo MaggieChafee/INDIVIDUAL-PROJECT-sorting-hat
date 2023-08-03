@@ -44,13 +44,15 @@ expelledStudents = [
   }, 
 ]
 
-// renderToDom - allows us render content dynamically by targeting certain areas of the DOM based on the html id
+// *** The Quintessential Function to Render HTML to the DOM Dynamically ***
+
 const renderToDom = (divId, htmlToRender) => {
   const selectedDiv = document.querySelector(divId);
   selectedDiv.innerHTML = htmlToRender;
 };
 
-// studentsOnDom - renders an array of objects to the dom, this one built to target the students array
+// *** Regular Students Cards Function ***
+
 const studentsOnDom = (array) => {
   let studentString = "";
   for (const student of array) {
@@ -65,29 +67,29 @@ const studentsOnDom = (array) => {
   renderToDom("#studentsContainer", studentString)
 }
 
-//calling the studentsOnDom function using the students array - need to move this to starting app function once completed
-studentsOnDom(students)
+// *** Expelled Students Cards Function ***
 
-// expelledOnDom - renders an array of objects to the dom by dynamically rendering the information to the bootstrap card
 const expelledOnDom = (array) => {
   let expelledString = "";
   for (const expelled of array) {
     expelledString += `<div class="card" style="width: 18rem;">
     <img src="https://media.comicbook.com/2016/08/wizard-world-hp-death-eaters-194218.jpg" class="card-img-top" alt="Harry Potter Death Eaters wandering through Hogsmeade in the Dark">
     <div class="card-body">
-      <p class="card-text">Sadly, <strong>${expelled.name}</strong> joined Voldy. Boo.</p>
+      <p class="card-text"><strong>${expelled.name}</strong> joined Voldemort. Lame.</p>
     </div>
   </div>`
   } 
   renderToDom("#expelledContainer", expelledString)
 }
-// calling the expelledOnDom function using the expelled students array - need to move this to starting app function once completed
 
-expelledOnDom(expelledStudents);
-
-// filter students by house
+// *** Query Selectors ***
 
 const filterContainer = document.querySelector("#filterBtns")
+const showFormBtn = document.querySelector("#showFormBtn")
+const studentsContainer = document.querySelector("#studentsContainer")
+const submitForm = document.querySelector("form")
+
+// *** Filter Buttons to Show Members of Each House Function and Event Listeners ***
 
 const studentsByHouse =  (house) => {
   const filteredStudents = students.filter((student) => student.house === house)
@@ -112,9 +114,7 @@ filterContainer.addEventListener('click', (e) => {
   }
 })
 
-// this block of code makes the code appear after clicking "Begin your journey"
-
-const showFormBtn = document.querySelector("#showFormBtn")
+// *** Show Form Function and Event Listener ***
 
 const showForm = (e) => {
   let sortString = ""
@@ -131,8 +131,7 @@ showFormBtn.addEventListener("click", (e) => {
   showForm()
 });
 
-// this portion of code submits the form and renders a card on dom for new student
-const submitForm = document.querySelector("form")
+// *** Random House Assignment Function and Event Listener  ***
 
 const houseSort = () => {
  const houseGen = [
@@ -160,17 +159,24 @@ const studentSort = (e) => {
 
 submitForm.addEventListener("submit", studentSort);
 
-// Expel Button Functionality 
-
-const studentsContainer = document.querySelector("#studentsContainer")
+// *** Expel Button Function *** 
 
 studentsContainer.addEventListener("click", (e) => {
   if (e.target.id.includes("expel")) {
     const [, id] = e.target.id.split("--")
     const index = students.findIndex(student => student.id === Number(id));
-    students.splice(index,1);
-    expelledStudents.push(students[index]);
+    const expel = students.splice(index,1)[0];
+    expelledStudents.push(expel);
   }
   studentsOnDom(students);
   expelledOnDom(expelledStudents);
 })
+
+// *** Start App ***
+
+const startApp = () => {
+  studentsOnDom(students);
+  expelledOnDom(expelledStudents);
+}
+
+startApp();
