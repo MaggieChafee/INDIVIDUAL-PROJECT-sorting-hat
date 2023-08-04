@@ -56,7 +56,7 @@ const renderToDom = (divId, htmlToRender) => {
 const studentsOnDom = (array) => {
   let studentString = "";
   for (const student of array) {
-    studentString += `<div class="card" style="width: 18rem;">
+    studentString += `<div id="students" class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">${student.name}</h5>
       <p class="card-text">${student.house}</p>
@@ -72,10 +72,16 @@ const studentsOnDom = (array) => {
 const expelledOnDom = (array) => {
   let expelledString = "";
   for (const expelled of array) {
-    expelledString += `<div class="card" style="width: 18rem;">
-    <img src="https://media.comicbook.com/2016/08/wizard-world-hp-death-eaters-194218.jpg" class="card-img-top" alt="Harry Potter Death Eaters wandering through Hogsmeade in the Dark">
-    <div class="card-body">
-      <p class="card-text"><strong>${expelled.name}</strong> joined Voldemort. Lame.</p>
+    expelledString += `<div class="card mb-3" style="width: 18rem;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img id="dark-mark"src="https://qph.cf2.quoracdn.net/main-qimg-86495354685045d33762177b982db2ad-lq" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <p class="card-text"><strong>${expelled.name}</strong><br>decided to join Voldy. Lame.</p>
+        </div>
+      </div>
     </div>
   </div>`
   } 
@@ -119,7 +125,7 @@ filterContainer.addEventListener('click', (e) => {
 const showForm = (e) => {
   let sortString = ""
   sortString += `
-  <div class="mb-3">
+  <div id=form class="mb-3">
   <label for="exampleFormControlTextarea1" class="form-label">First and Last Name</label>
   <textarea class="form-control" id="student-name" rows="1" required></textarea>
   </div>
@@ -165,8 +171,8 @@ studentsContainer.addEventListener("click", (e) => {
   if (e.target.id.includes("expel")) {
     const [, id] = e.target.id.split("--")
     const index = students.findIndex(student => student.id === Number(id));
-    const expel = students.splice(index,1)[0];
-    expelledStudents.push(expel);
+    const expel = students.splice(index,1);
+    expelledStudents.push(...expel);
   }
   studentsOnDom(students);
   expelledOnDom(expelledStudents);
